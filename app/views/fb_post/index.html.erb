@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <style>
+      ul {
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+        overflow: hidden;
+        background-color: #333;
+      }
+
+      li {
+        float: right;
+      }
+
+      li a {
+        display: block;
+        color: white;
+        text-align: center;
+        padding: 14px 16px;
+        text-decoration: none;
+      }
+
+      li a:hover {
+        background-color: #111;
+      }
+    </style>
+  </head>
+  <body>
+    <h1 style="margin: 0 0 0 40%;">Wall Page Post User</h1>
+    <ul>
+      <li><%= link_to "Sign out", destroy_user_session_path, method: :delete  %></li>
+      <li><%= link_to "Back", "/facebook_user" , method: :get  %></li>
+    </ul>
+    <div class="ibox-content wrapper wrapper-content ">
+      <div class="row col-12">
+      </div>
+      <div class="row col-12 content_center">
+        <% if @fbuser.profile_picture.attached? %>
+        <p><strong>Profile Picture:</strong> <%= image_tag @fbuser.profile_picture, :class => "avatar" %></p>
+        <% else %>
+          <p>No profile picture available.</p>
+        <% end %><p><strong>Name:</strong> <%= @fbuser.name %>&nbsp;&nbsp;<strong>Age:</strong><%= @fbuser.age %>&nbsp;&nbsp;<strong>Interests:</strong> <%= @fbuser.interests %></p>
+        <p><strong>News Feed</strong>
+        <% @fbuser.fb_posts.each do |post| %>
+          <% if post.image.attached? %>
+            <p><strong>Image:</strong> <%= image_tag post.image ,:style => "width: 18%"%></p>
+          <% end %>
+          <p><strong>content:</strong><%= post.content %></p>
+          <% if user_signed_in? %>
+            <% if post.likes.where(facebook_user_id: @fb.id, status: 1).exists? %>
+              <%= button_to 'Unlike', "/likes/#{post.id}", method: :delete %>
+            <% else %>
+              <%= button_to 'Like', "/likes?fb_post_id=#{post.id}", method: :post %>
+            <% end %>
+          <% end %>
+          <% if user_signed_in? %>
+            <% if post.comments&.find_by(facebook_user_id: @fb.id).present? %>
+              <p><strong>Comment:</strong></p> <%= post.comments[0].content %>
+            <% else %>
+              <%= link_to 'Comments', "/comments/new?post_id=#{post.id}", method: :get %>
+            <% end %>
+          <% end %>
+        <% end %>
+      </div>
+    </div>
+  </body>
+</html>

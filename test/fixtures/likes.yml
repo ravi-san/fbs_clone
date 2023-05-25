@@ -1,0 +1,9 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  facebook_user: one
+  fb_post: one
+
+two:
+  facebook_user: two
+  fb_post: two

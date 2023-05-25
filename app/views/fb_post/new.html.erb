@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <style>
+      ul {
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+        overflow: hidden;
+        background-color: #333;
+      }
+
+      li {
+        float: right;
+      }
+
+      li a {
+        display: block;
+        color: white;
+        text-align: center;
+        padding: 14px 16px;
+        text-decoration: none;
+      }
+
+      li a:hover {
+        background-color: #111;
+      }
+    </style>
+  </head>
+  <body>
+    <h1 style="margin: 0 0 0 40%;">Create Post </h1>
+    <ul>
+      <li><%= link_to "Sign out", destroy_user_session_path, method: :delete  %></li>
+      <li><%= link_to "Back", "/facebook_user" , method: :get  %></li>
+    </ul>
+    <div class="ibox-content wrapper wrapper-content ">
+      <div class="row col-12">
+      </div>
+      <div class="row col-12 content_center">
+        <%= form_for(:fbpost, url: "/fb_post", html: { method: :post, id: "resort", style: "margin: 0 0 0 36%;font-size: 18px"  }) do |form| %>
+          <div class="form-group">
+            <%= form.label :content %>
+            <%= form.text_area :content,style: "margin:0 0 0 15px;" %>
+          </div>
+          <br>
+
+          <div class="form-group">
+           <%= form.label :image %>
+            <%= form.file_field :image ,accept:'image/*'%>
+          </div>
+          <br>
+
+          <%= form.hidden_field :facebook_user_id, :value => "#{@fb.id}" %>
+          <%= form.submit 'Create Post', class: 'btn btn-primary',style: "margin:0 0 0 18%;" %>
+        <% end %>
+      </div>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+  <script src='https://kit.fontawesome.com/a076d05399.js' crossorigin='anonymous'></script>
+  <head>
+    <style>
+    table {
+      font-family: arial, sans-serif;
+      border-collapse: collapse;
+      width: 100%;
+    }
+
+    td, th {
+      border: 1px solid #dddddd;
+      text-align: left;
+      padding: 8px;
+    }
+
+    tr:nth-child(even) {
+      background-color: #dddddd;
+    }
+
+    ul {
+      list-style-type: none;
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+      background-color: #333;
+    }
+
+    li {
+      float: right;
+    }
+
+    li a {
+      display: block;
+      color: white;
+      text-align: center;
+      padding: 14px 16px;
+      text-decoration: none;
+    }
+
+    li a:hover {
+      background-color: #111;
+    }
+
+
+    .table-image {
+      td, th {
+        vertical-align: middle;
+      }
+    }
+
+    .empty_container {
+        height: 500px !important;
+    }
+
+  
+    </style>
+  </head>
+  <body>
+    <br>
+    <h1 style="margin: 0 0 0 40%;">New Request</h1>
+   
+   
+     
+      <ul>
+        <li><%= link_to "Back", "/facebook_user", method: :get  %></li>
+        <li><%= link_to "Sign out", destroy_user_session_path, method: :delete  %></li>
+      </ul>
+      <div class="ibox-content wrapper wrapper-content ">
+        <div class="row col-12">
+        </div>
+        <div class="row col-12 content_center">
+         <div>
+         <% if @fri.present? %> 
+          <% @fri.each do |user| %>
+          <%= image_tag user.facebook_user.profile_picture, :class => "avatar" %> <p><strong><%= user.facebook_user.name %></strong>
+          <%= button_to 'Accept Friend Invitation', {:controller => "friendships", :action => "update", :id => user.id} , :method=>:patch  %></p>
+        <% end %>
+        <%else %>
+          <p> No Request Now </p>
+        <% end%>
+  </div>
+
+        
+         
+        </div>
+      </div>
+
+  </body>
+</html>
+
+
+
+
+
+

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<style>
+		ul {
+		  list-style-type: none;
+		  margin: 0;
+		  padding: 0;
+		  overflow: hidden;
+		  background-color: #333;
+		}
+
+		li {
+		  float: right;
+		}
+
+		li a {
+		  display: block;
+		  color: white;
+		  text-align: center;
+		  padding: 14px 16px;
+		  text-decoration: none;
+		}
+
+		li a:hover {
+		  background-color: #111;
+		}
+		</style>
+	</head>
+	<body>
+		<h1 style="margin: 0 0 0 40%;">Comments for post</h1>
+		<ul>
+		  <li><%= link_to "Sign out", destroy_user_session_path, method: :delete  %></li>
+		  <li><%= link_to "Back", "/fb_post/#{current_user.id}" , method: :get  %></li>
+		</ul>
+		<div class="ibox-content wrapper wrapper-content ">
+      <div class="row col-12">
+      </div>
+      <div class="row col-12 content_center">
+				<%= form_for(:comment, url: "/comments?fb_post_id=#{params[:post_id]}", html: { method: :post, id: "comment" ,style: "margin: 0 0 0 36%;font-size: 18px"}) do |f| %>
+					<div class="form-group">
+					  <%= f.label :Comment %>
+					  <%= f.text_area :content, style: "width: 35%;"%>
+					</div>
+					<br>
+  				<%= f.submit 'Submit', class: 'btn btn-primary', style: "margin: 0 0 0 18%;"%>
+				<% end %>
+			</div>
+		</div>
+	</body>
+</html>

@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html>
+  <script src='https://kit.fontawesome.com/a076d05399.js' crossorigin='anonymous'></script>
+  <head>
+    <style>
+    table {
+      font-family: arial, sans-serif;
+      border-collapse: collapse;
+      width: 100%;
+    }
+
+    td, th {
+      border: 1px solid #dddddd;
+      text-align: left;
+      padding: 8px;
+    }
+
+    tr:nth-child(even) {
+      background-color: #dddddd;
+    }
+
+    ul {
+      list-style-type: none;
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+      background-color: #333;
+    }
+
+    li {
+      float: right;
+    }
+
+    li a {
+      display: block;
+      color: white;
+      text-align: center;
+      padding: 14px 16px;
+      text-decoration: none;
+    }
+
+    li a:hover {
+      background-color: #111;
+    }
+
+
+    .table-image {
+      td, th {
+        vertical-align: middle;
+      }
+    }
+
+    .empty_container {
+        height: 500px !important;
+    }
+
+  
+    </style>
+  </head>
+  <body>
+    <br>
+    <h1 style="margin: 0 0 0 40%;">Welcome to Facebook</h1>
+    <% if current_user.present? && !@user.present? %>
+      <ul>
+        <li><%= link_to "Sign out", destroy_user_session_path, method: :delete  %></li>
+        <li><%= link_to "Create Profile!", new_facebook_user_path, method: :get %></li>
+      </ul>
+      <div class="ibox-content wrapper wrapper-content ">
+        <div class="row col-12">
+        </div>
+        <div class="row col-12 content_center">
+          <span class="">No Profile Found. Please Create Profile</span>
+        </div>
+      </div>
+    <%else%>
+     <ul>
+       <li><%= link_to "New Feeds", "/fb_post/#{@user&.id}", method: :get  %></li>
+       <li><%= link_to "Add Request", "/friendships/new", method: :get  %></li>
+       <li><%= link_to "New Request", "/friendships", method: :get  %></li>
+        <li><%= link_to "Sign out", destroy_user_session_path, method: :delete  %></li>
+         <% if @user.profile_picture.attached? %>
+        <li> <%= link_to image_tag(@user.profile_picture, :alt => "Image Description", :class => "avatar"), "/facebook_user/#{@user.id}" %></li>
+        <li><%= link_to "Add Post", new_fb_post_path, method: :get  %></li>
+        <% else %>
+         <li><%= link_to "Create Profile!", new_facebook_user_path, method: :get %></li>
+        <%end%>
+      </ul>
+      <br>
+      <div class="container">
+        <div class="row">
+          <div class="col-12">
+            <table class="table table-bordered">
+              <thead>
+                <tr>
+                  <th scope="col">Name</th>
+                  <th scope="col">content</th>
+                  <th scope="col">Image</th>
+                  <th scope="col">Action</th>
+                </tr>
+              </thead>
+            <% @user.fb_posts.each do |post| %>
+              <tbody>
+                <tr class="footable-odd" style="">
+                  <td class="footable-visible footable-first-column"> 
+                    <%= @user.name %>
+                  </td>
+                  <td class="footable-visible"><%= post.content %></td>
+                  <td>
+                     <% if post.image.attached? %>
+                    <%= image_tag post.image, :style => "width: 18%" %></p>
+                  <% end %>
+                  </td>
+                  <td class="text-right footable-visible footable-last-column">
+                    <div class="more_popup more_popup_action">
+                      <i class="fas fa-ellipsis-h action_ellipsis_horizontal cursor_pointer"></i>
+                      <div class="more_popup_content">
+                      <%= link_to "Like", "/likes/#{post.id}",method: :get%>
+                      <%= link_to "Comments", "/comments/#{post.id}" , method: :get %>
+                      </div>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            <% end %>  
+            </table>
+          </div>
+        </div>
+      </div>
+      <%end%>
+  </body>
+</html>
+
+
