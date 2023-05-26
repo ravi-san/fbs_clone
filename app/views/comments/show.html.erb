@@ -60,33 +60,23 @@
   <body>
     <br>
     <h1 style="margin: 0 0 0 40%;">Welcome to Facebook</h1>
-   
-   
-     
-      <ul>
-        <li><%= link_to "Back", "/facebook_user", method: :get  %></li>
-        <li><%= link_to "Sign out", destroy_user_session_path, method: :delete  %></li>
-      </ul>
-      <div class="ibox-content wrapper wrapper-content ">
-        <div class="row col-12">
-        </div>
-        <div class="row col-12 content_center">
+    <ul>
+      <li><%= link_to "Back", "/facebook_user", method: :get  %></li>
+      <li><%= link_to "Sign out", destroy_user_session_path, method: :delete  %></li>
+    </ul>
+    <div class="ibox-content wrapper wrapper-content ">
+      <div class="row col-12">
+      </div>
+      <div class="row col-12 content_center">
        
-  <div>
-  	<p>Comment Count: <%=@com.count %></p>
-  	<% @com.each do |com| %>
+        <p>Comment Count: <%=@com.count %></p>
+        <% @com.each do |com| %>
           <% @fb = com.facebook_user %>
           </p>Profile Name:<%= @fb.name %> </p>
-           </p>Comment:<%= com.content %> </p>
-          	<%end %>
-
-  </div>
-
-        
-         
-        </div>
+          </p>Comment:<%= com.content %> </p>
+        <%end %>
       </div>
-
+    </div>
   </body>
 </html>
 
